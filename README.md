@@ -108,3 +108,40 @@ The Streamlit experience follows a reveal rather than a questionnaire: **normal 
 
 ## Colab notebook
 `Technology_Continuity_Storytelling_Engine.ipynb` documents and tests the storytelling questions, hidden scoring, personas, commercial qualification logic, Google Sheets structure, and analytical charts. Use it for model development; use `app.py` for the live conference experience.
+
+---
+
+## V2 — Storytelling Cyber UI
+
+The production interface now follows an incident-led storytelling flow instead of a traditional survey:
+
+1. **System Down hero** — production down, no data access, provider unreachable.
+2. **Persona gate** — visual role cards route visitors into Client, Provider, Hybrid, Advisor, or Explorer paths.
+3. **Scenario journey** — one incident moment per screen, with hidden weighted scoring.
+4. **Result reveal** — readiness gauge, persona, radar profile, top three exposed areas, and a prominent service recommendation.
+5. **Private commercial intelligence** — Eligibility, Service Need, Decision Influence, Organization Fit, Commercial Opportunity and Opportunity Class are never shown to the visitor.
+6. **Google Sheets upsert** — the anonymous result is stored first; if the visitor later consents to contact, the same session row is updated rather than duplicated.
+7. **Hidden team dashboard** — it is intentionally removed from visitor navigation. Open the deployed app with `?admin=1`, for example: `https://YOUR-APP.streamlit.app/?admin=1`.
+
+### Streamlit Cloud
+
+Deploy `app.py` from the repository root. Set the following in **App settings → Secrets**:
+
+```toml
+GOOGLE_SHEET_NAME = "Technology Continuity Leads"
+DASHBOARD_PASSWORD = "choose-a-strong-password"
+
+[gcp_service_account]
+type = "service_account"
+project_id = "..."
+private_key_id = "..."
+private_key = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+client_email = "..."
+client_id = "..."
+auth_uri = "https://accounts.google.com/o/oauth2/auth"
+token_uri = "https://oauth2.googleapis.com/token"
+auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+client_x509_cert_url = "..."
+```
+
+Never commit real credentials or `.streamlit/secrets.toml` to GitHub.
