@@ -244,6 +244,19 @@ def inject_css(theme_name, lang):
     #MainMenu, footer, header {{ visibility:hidden; }}
     section[data-testid="stSidebar"] {{ display:none; }}
     h1,h2,h3,p,label {{ text-align:{align}; color:var(--text); }}
+    /* Contact form: keep fields readable in dark mode */
+    div[data-testid="stTextInput"] input {{
+        background:#0B1526 !important;
+        color:#F5F8FF !important;
+        -webkit-text-fill-color:#F5F8FF !important;
+        border:1px solid #233755 !important;
+        border-radius:10px !important;
+        caret-color:var(--cyan) !important;
+    }}
+    div[data-testid="stTextInput"] input::placeholder {{ color:#71809B !important; opacity:1 !important; }}
+    div[data-testid="stTextInput"] label, div[data-testid="stCheckbox"] label {{ color:var(--text) !important; }}
+    div[data-testid="stTextInput"] [data-baseweb="input"] {{ background:#0B1526 !important; border-radius:10px !important; }}
+    div[data-testid="stCheckbox"] p {{ color:var(--text) !important; }}
     .topbar {{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:4px 0 18px 0;}}
     .brand {{font-weight:800;letter-spacing:.11em;font-size:.76rem;color:var(--cyan);}}
     .brand span {{color:var(--purple);}}
@@ -810,14 +823,14 @@ elif st.session_state.page=="result":
         email=st.text_input(tr("email"))
         phone=st.text_input(tr("phone"))
     consent=st.checkbox(tr("consent"))
-    if st.button(tr("save"),use_container_width=True,icon=":material/lock_person:"):
+    if st.button("🔒  "+tr("save"),use_container_width=True):
         contact={"name":name,"organization":org,"email":email,"phone":phone,"consent":consent} if consent else {"name":"","organization":"","email":"","phone":"","consent":False}
         try:
             target=save_record(flatten_record(scores,st.session_state.answers,contact))
             st.success(tr("saved")+("  • Google Sheets ✓" if target=="google" else "  • Local demo ✓"))
         except Exception as e:
             st.error(str(e))
-    if st.button(tr("new"),use_container_width=True,type="secondary",icon=":material/restart_alt:"):
+    if st.button("↻  "+tr("new"),use_container_width=True,type="secondary"):
         reset_assessment()
         st.rerun()
 
@@ -828,7 +841,7 @@ elif st.session_state.page=="dashboard_login":
     st.markdown(f"<div class='hero-wrap'><div class='eyebrow'>INTERNAL ACCESS</div><div class='hero-title'>{tr('team')}</div><div class='muted'>{'This area is for the event team and commercial follow-up only.' if lang=='en' else 'هذه المنطقة مخصصة لفريق المؤتمر والمتابعة التجارية فقط.'}</div></div>",unsafe_allow_html=True)
     configured=st.secrets.get("DASHBOARD_PASSWORD","")
     pwd=st.text_input(tr("password"),type="password")
-    if st.button(tr("open"),use_container_width=True,icon=":material/admin_panel_settings:"):
+    if st.button("▣  "+tr("open"),use_container_width=True):
         if not configured or pwd==configured: st.session_state.page="dashboard"; st.rerun()
         else: st.error("Incorrect password / كلمة المرور غير صحيحة")
 
