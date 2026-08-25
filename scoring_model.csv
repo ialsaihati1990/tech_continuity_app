@@ -1,0 +1,12 @@
+Layer,Metric,Weight,Visible_to_visitor,Purpose
+Public Readiness,Asset Control,25%,Yes (dashboard/radar),Control of code/data/access/documentation
+Public Readiness,Continuity Recovery,23%,Yes (dashboard/radar),Ability to continue during provider disruption
+Public Readiness,Exit Readiness,18%,Yes (dashboard/radar),Ability to transition away from provider
+Public Readiness,Contract Clarity,14%,Yes (dashboard/radar),Clarity of transition/access obligations
+Public Readiness,Evidence & Governance,10%,Yes (dashboard/radar),Ability to prove controls/readiness
+Public Readiness,Criticality Adjustment,10%,No,Business impact context
+Commercial,Service Need,36%,No,Latent need inferred from scenarios
+Commercial,Eligibility,20%,No,Whether visitor represents a relevant organization/ecosystem actor
+Commercial,Decision Influence,16%,No,Ability to influence or approve buying decision
+Commercial,Organization Fit,13%,No,Target-account fit
+Commercial,Exposure,15%,No,Inverse of readiness
