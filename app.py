@@ -34,7 +34,7 @@ THEMES = {
 COPY = {
     "en": {
         "title": "Technology Continuity Profile",
-        "subtitle": "A short interactive story that reveals how much control your organization keeps when technology relationships are tested.",
+        "subtitle": "A 2-minute diagnostic of how resilient your technology relationships are.",
         "start": "Start profile",
         "language": "Language",
         "theme": "Theme",
@@ -63,7 +63,7 @@ COPY = {
     },
     "ar": {
         "title": "ملف استمرارية التقنية",
-        "subtitle": "قصة تفاعلية قصيرة تكشف مدى بقاء السيطرة بيد جهتك عندما تتعرض العلاقة التقنية للاختبار.",
+        "subtitle": "تشخيص ذكي خلال دقيقتين لقياس جاهزية علاقتك بالموردين التقنيين.",
         "start": "ابدأ التقييم",
         "language": "اللغة",
         "theme": "المظهر",
@@ -551,13 +551,6 @@ if st.session_state.page == "intro":
     ]
     for c,(a,b) in zip([c1,c2,c3],labels):
         with c: st.metric(b, a)
-    st.markdown(f"""
-    <div class="score-card">
-      <div class="eyebrow">{"THE STORY BEGINS" if lang=="en" else "تبدأ القصة"}</div>
-      <div class="persona">{"Everything is working. Until one link suddenly isn't." if lang=="en" else "كل شيء يعمل... إلى أن تتوقف فجأة حلقة واحدة."}</div>
-      <p class="muted">{"Your systems are live, your provider is responsive, and operations feel under control. Now imagine tomorrow changes one assumption. Walk through a few moments and discover what your organization can truly rely on." if lang=="en" else "أنظمتك تعمل، والمورد متجاوب، والتشغيل يبدو تحت السيطرة. تخيّل أن الغد غيّر افتراضًا واحدًا فقط. مرّ معنا عبر عدة مواقف واكتشف ما الذي تستطيع جهتك الاعتماد عليه فعلًا."}</p>
-    </div>
-    """, unsafe_allow_html=True)
     st.write("")
     if st.button(t("start"), use_container_width=True):
         st.session_state.page = "assessment"
@@ -581,10 +574,6 @@ elif st.session_state.page == "assessment":
     progress = (idx+1)/len(qs)
     st.progress(progress)
     st.markdown(f"<div class='small-note'>{idx+1} / {len(qs)}</div>", unsafe_allow_html=True)
-    story_en = ["Set the scene.", "Now the relationship is tested.", "Control becomes visible when access is needed.", "A handover reveals what is truly portable.", "Contracts matter most when the relationship changes.", "Continuity is measured by what happens next.", "Evidence turns confidence into assurance.", "Your profile is almost complete."]
-    story_ar = ["لنحدد المشهد أولًا.", "الآن تبدأ العلاقة التقنية بالاختبار.", "تظهر السيطرة الحقيقية عندما نحتاج الوصول.", "لحظة التسليم تكشف ما يمكن نقله فعلًا.", "تظهر قيمة العقود عندما تتغير العلاقة.", "الاستمرارية تُقاس بما يحدث بعد التعطل.", "الدليل يحول الثقة إلى ضمان.", "اكتمل ملفك تقريبًا."]
-    beat = (story_ar if lang=="ar" else story_en)[min(idx,7)]
-    st.markdown(f"<div class='eyebrow'>{beat}</div>", unsafe_allow_html=True)
     st.markdown(f"### {q[lang]}")
 
     options = q["options"]
@@ -648,8 +637,6 @@ elif st.session_state.page == "result":
     service = p[f"service_{lang}"]
     priority = scores[f"priority_{lang}"]
 
-    reveal = ("Your story reveals where control is strong — and where one disruption could create pressure." if lang=="en" else "قصتك تكشف أين تملك جهتك السيطرة، وأين قد يتحول تعطل واحد إلى ضغط حقيقي.")
-    st.markdown(f"<div class='hero'><div class='eyebrow'>{'YOUR CONTINUITY STORY' if lang=='en' else 'قصة استمراريتك'}</div><h2>{reveal}</h2></div>", unsafe_allow_html=True)
     left,right = st.columns([1.15,1])
     with left:
         st.markdown(f"""
